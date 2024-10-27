@@ -130,6 +130,8 @@ const Home = () => {
 
     return (
         <div ref={mainDivRef} className="bg-white dark:bg-black h-screen relative overflow-y-auto w-full px-0 sm:px-20 lg:px-0 flex flex-col">
+            <div className="container md:mx-auto md:px-4"> {/* Menambahkan container di sini */}
+            
             {post.map((item) => (
                 <CardPost key={item.id}>
                     <CardPost.Header username={item.username}></CardPost.Header>
@@ -230,7 +232,7 @@ const Home = () => {
                    </>
                 )
             }
-            
+            </div>
         </div>
     )
 }

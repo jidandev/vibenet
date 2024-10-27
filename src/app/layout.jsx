@@ -58,7 +58,7 @@ export default function RootLayout({ children }) {
   const pathName = usePathname();
   const router = useRouter();
   return (
-    <html lang="en" class="">
+    <html lang="en" class="dark">
       <head>
           <meta charSet="UTF-8" />
           <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -71,15 +71,17 @@ export default function RootLayout({ children }) {
         <ReduxProvider >
 
         {enablePathName.includes(pathName) ? 
-        <div className="flex min-h-screen bg-white dark:bg-black ">
-        <div className="bg-white dark:bg-black h-screen w-[35rem] flex-col items-center hidden lg:flex">
-            <NavBar />
-        </div>
-        {children}
-        <div className="bg-white dark:bg-black h-screen w-[40rem] pl-5 pr-10 hidden lg:block">
-          <input className="mt-10 bg-slate-300 dark:bg-gray-800 text-sm border-0 rounded-lg 2-full py-3 px-3 text-black dark:text-white w-full focus:ring-0 focus:outline-none" type="text" placeholder="Search" />
-        </div>
-    </div> : <>{children}</>
+        <div className="flex min-h-screen bg-white dark:bg-black container mx-auto xl:px-20">
+        
+          <div className="bg-white dark:bg-black h-screen w-[35rem] flex-col items-center hidden lg:flex">
+              <NavBar />
+          </div>
+          {children}
+          <div className="bg-white dark:bg-black h-screen w-[40rem] pl-5 pr-10 hidden lg:block">
+            <input className="mt-10 bg-slate-300 dark:bg-gray-800 text-sm border-0 rounded-lg 2-full py-3 px-3 text-black dark:text-white w-full focus:ring-0 focus:outline-none" type="text" placeholder="Search" />
+          </div>
+        </div> 
+    : <>{children}</>
       }
         </ReduxProvider>
         

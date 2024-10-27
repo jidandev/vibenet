@@ -11,8 +11,11 @@ const NavBar = () => {
     
     useEffect(() => {
       // Set theme dari localStorage saat komponen pertama kali dimuat
-      const savedTheme = localStorage.getItem("theme") || "light";
-      dispatch(setTheme(savedTheme));
+      const savedTheme = localStorage.getItem("theme");
+      if(savedTheme) {
+        dispatch(setTheme(savedTheme));
+      }
+      
     }, [dispatch]);
   
       const [themeColor, setThemeColor] = useState('text-black');

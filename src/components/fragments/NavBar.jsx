@@ -1,3 +1,4 @@
+'use client'
 const { setTheme } = require("@/app/redux/features/themeSlice");
 const { usePathname, useRouter } = require("next/navigation");
 const { useState, useEffect } = require("react");

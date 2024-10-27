@@ -49,7 +49,7 @@ const Home = () => {
                     <h1 className="text-blue-600 font-semibold ml-3 mt-1 cursor-pointer">Bagikan</h1>
                 </button>
             </div>
-            <Image src={localStorage.getItem("image")} alt="" width={500} height={500} className="w-full h-96 object-cover"/>
+            <Image src={image} alt="" width={500} height={500} className="w-full h-96 object-cover"/>
             <textarea name="caption" id="caption" placeholder="Isi caption" className="p-2 w-full h-full bg-white text-black dark:bg-black dark:text-white focus:outline-none focus:ring-0"></textarea>
         </form>
     )

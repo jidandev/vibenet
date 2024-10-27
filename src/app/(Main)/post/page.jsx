@@ -22,7 +22,7 @@ const Home = () => {
         if (savedImage) {
             setImage(savedImage);
         } else {
-            setImage("/images.jpeg"); // Gambar default
+            setImage("/images.jpeg");
         }
     }, []); // Hanya dijalankan saat komponen dimount
 

@@ -14,13 +14,25 @@ const Home = () => {
     const router = useRouter();
     const dispatch = useDispatch();
     const { post } = useSelector((state) => state.post);
+    const [image, setImage] = useState(""); // State untuk menyimpan gambar
+
+    useEffect(() => {
+        // Akses localStorage hanya di sini
+        const savedImage = localStorage.getItem("image");
+        if (savedImage) {
+            setImage(savedImage);
+        } else {
+            setImage("/images.jpeg"); // Gambar default
+        }
+    }, []); // Hanya dijalankan saat komponen dimount
+
     const handlePost = async (e) => {
         e.preventDefault();
         let caption = e.target.caption.value;
         dispatch(addPost({
             id: Date.now().toString(),
             username: "jidann_.0",
-            image: localStorage.getItem("image"),
+            image,
             caption,
             likes: [],
         }))

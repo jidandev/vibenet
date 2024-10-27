@@ -49,7 +49,12 @@ const enablePathName = ["/", "/post", "/comment"]
 // };
 
 export default function RootLayout({ children }) {
-  if(localStorage.getItem("theme") !== "dark" && localStorage.getItem("theme") !== "light") localStorage.setItem("theme", "system")
+  useEffect(() => {
+    if(localStorage.getItem("theme") !== "dark" && localStorage.getItem("theme") !== "light") {
+      localStorage.setItem("theme", "system")
+    }
+  }, [])
+   
   const pathName = usePathname();
   const router = useRouter();
   return (

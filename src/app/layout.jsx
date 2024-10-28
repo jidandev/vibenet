@@ -34,11 +34,13 @@ const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
   variable: "--font-geist-sans",
   weight: "100 900",
+  display: 'swap'
 });
 const geistMono = localFont({
   src: "./fonts/GeistMonoVF.woff",
   variable: "--font-geist-mono",
   weight: "100 900",
+  display: 'swap',
 });
 
 const enablePathName = ["/", "/post", "/comment", "/test"]
@@ -65,7 +67,7 @@ export default function RootLayout({ children }) {
           <title>VibeNet</title>
       </head>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} ${inter.className} antialiased bg-white dark:bg-black `}
+        className={` antialiased bg-white dark:bg-black `}
       >
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           

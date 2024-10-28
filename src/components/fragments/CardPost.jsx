@@ -7,18 +7,20 @@ import {
   likePost,
 } from '../../app/redux/features/postSlice';
 import { useRouter } from "next/navigation";
+import { useTheme } from "next-themes";
 
 const CardPost = ({children}) => {
     
     return (
-        <div className="flex flex-col w-full">
+        <div className="flex flex-col w-full dark:bg-black bg-white">
             {children}
         </div>
     )
 }
 
 const Header = ({image = "/images.jpeg", username="unknown"}) => {
-    const {theme} = useSelector((state) => state.theme);
+    const { theme } = useTheme();
+  
     return(
         <div className="flex justify-between flex-row mt-2 ml-2 mb-2">
             <div className="flex">
@@ -38,30 +40,14 @@ const Body = ({image = ""}) => {
     )
 }
 
-const Footer = ({like = 0, username="unknown", children="", id, handleComment, setPostId}) => {
+const Footer = ({like = 0, username="unknown", children="", id, handleComment, setPostId, iconColor}) => {
     const dispatch = useDispatch();
     const { post } = useSelector((state) => state.post);
     const router = useRouter();
     const [isExpanded, setIsExpanded] = useState(false);
     const [isLike, setIsLike] = useState(false);
-    const {theme} = useSelector((state) => state.theme);
-    const [iconColor, setIconColor] = useState("gray");
-    useEffect(() => {
-        if (theme === 'system') {
-        const systemTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-            if(systemTheme == "dark") {
-                setIconColor("white")
-            } else {
-                setIconColor("black")
-            }
-        }
-        else if(theme === "dark") {
-            setIconColor("white")
-        } else {
-            setIconColor("black")
-        }
-
-    }, [theme])
+    
+   
 
     //SET LIKE
     const handleLike = (id) => {

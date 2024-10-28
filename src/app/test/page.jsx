@@ -9,6 +9,7 @@ import { useEffect, useRef, useState } from "react";
 import { ArrowBackOutline, Close, EllipsisVertical, Heart, Send } from "react-ionicons";
 import { useSelector, useDispatch } from 'react-redux';
 import { addComment, addReply, addSubReply, likeComment, likeReply } from '../redux/features/commentSlice';
+import { useTheme } from "next-themes";
 
 
 const Home = () => {
@@ -25,25 +26,37 @@ const Home = () => {
     const [parentData, setParentData] = useState(null);
     const [isReply, setIsReply] = useState(false)
     const [postId, setPostId] = useState(0);
-    //theme
-    const {theme} = useSelector((state) => state.theme);
-    const [iconColor, setIconColor] = useState("gray");
-    useEffect(() => {
-        if (theme === 'system') {
-        const systemTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-            if(systemTheme == "dark") {
-                setIconColor("white")
-            } else {
-                setIconColor("black")
-            }
-        }
-        else if(theme === "dark") {
-            setIconColor("white")
-        } else {
-            setIconColor("black")
-        }
+    const { theme, setTheme, systemTheme } = useTheme();
+    
 
-    }, [theme])
+    // Mengambil lebar elemen utama ketika pertama kali render atau saat openComment berubah
+    const updateWidth = () => {
+        if (mainDivRef.current) {
+          const mainDivWidth = (mainDivRef.current.offsetWidth / window.innerWidth) * 100;
+          setWidth((mainDivWidth ) + '%');
+        }
+      };
+
+    useEffect(() => {
+        // Update lebar pertama kali saat openComment aktif
+        if (openComment) {
+          updateWidth();
+        }
+        
+        // Event listener untuk menangani perubahan ukuran layar
+        window.addEventListener('resize', updateWidth);
+    
+        // Cleanup saat component unmount atau openComment berubah
+        return () => {
+          window.removeEventListener('resize', updateWidth);
+        };
+      }, [openComment]);
+
+
+
+    // Tentukan tema yang aktif saat ini
+    const currentTheme = theme === 'system' ? systemTheme : theme;
+
 
     const handleAddComment = () => {
         const comment = {
@@ -104,29 +117,10 @@ const Home = () => {
         
       };
     
-
-    // Mengambil lebar elemen utama ketika pertama kali render atau saat openComment berubah
-    const updateWidth = () => {
-        if (mainDivRef.current) {
-          const mainDivWidth = (mainDivRef.current.offsetWidth / window.innerWidth) * 100;
-          setWidth((mainDivWidth ) + '%');
-        }
-      };
+      
     
-      useEffect(() => {
-        // Update lebar pertama kali saat openComment aktif
-        if (openComment) {
-          updateWidth();
-        }
-        
-        // Event listener untuk menangani perubahan ukuran layar
-        window.addEventListener('resize', updateWidth);
     
-        // Cleanup saat component unmount atau openComment berubah
-        return () => {
-          window.removeEventListener('resize', updateWidth);
-        };
-      }, [openComment]);
+      
 
     return (
         <div ref={mainDivRef} className="bg-white dark:bg-black h-screen relative overflow-y-auto w-full px-0 lg:px-0 flex flex-col">
@@ -136,7 +130,7 @@ const Home = () => {
                 <CardPost key={item.id}>
                     <CardPost.Header username={item.username}></CardPost.Header>
                     <CardPost.Body image={item.image}></CardPost.Body>
-                    <CardPost.Footer setPostId={setPostId} handleComment={setOpenComment} id={item.id} like={item.likes.length} username={item.username}>{item.caption}</CardPost.Footer>                
+                    <CardPost.Footer iconColor={currentTheme == "dark" ? "white" : "black"} setPostId={setPostId} handleComment={setOpenComment} id={item.id} like={item.likes.length} username={item.username}>{item.caption}</CardPost.Footer>                
             </CardPost>
             ))}
             {openComment && (
@@ -145,7 +139,7 @@ const Home = () => {
                 className="fixed top-0 left-0 sm:left-auto  lg:left-auto h-screen bg-white dark:bg-black z-50 p-2 sm:p-6  overflow-y-auto"
                 >
                     <div className="w-full h-12 bg-white dark:bg-black flex mt-1 ">
-                        <h1 onClick={() => {setOpenComment(false); setPostId(0)}} className="w-8 h-8 cursor-pointer "><ArrowBackOutline style={{color: iconColor, width: "100%", height: "100%"}} /></h1>
+                        <h1 onClick={() => {setOpenComment(false); setPostId(0)}} className="w-8 h-8 cursor-pointer "><ArrowBackOutline style={{color: currentTheme == "dark" ? "white" : "black", width: "100%", height: "100%"}} /></h1>
                         <h2 onClick={() => console.log(comments)} className="text-lg font-semibold text-black dark:text-white mx-auto">Comments</h2>
                     </div>
                     
@@ -186,7 +180,7 @@ const Home = () => {
                         {commentData !== null && (
                             <div className="flex">
                                 <h2 className="text-md font-semibold ml-2 mb-1 text-black dark:text-gray-200">Membalas {commentData.username}</h2>
-                                <h1 onClick={() => {setReply({text: "", commentId: null, parentId: null}); setCommentData(null); setParentData(null); setIsReply(false);}} className="h-5 w-5 mt-1 ml-1"><Close style={{fill: iconColor, width:"100%", height:"100%"}} /></h1>
+                                <h1 onClick={() => {setReply({text: "", commentId: null, parentId: null}); setCommentData(null); setParentData(null); setIsReply(false);}} className="h-5 w-5 mt-1 ml-1"><Close style={{fill: currentTheme == "dark" ? "white" : "black", width:"100%", height:"100%"}} /></h1>
                                 
                             </div>
                         )} 

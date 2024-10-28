@@ -2,15 +2,14 @@
 import localFont from "next/font/local";
 import "./globals.css";
 import { Inter, Playfair_Display } from 'next/font/google'
-import ThemeSwitch from "./(Auth)/themeSwitch";
 import { useEffect, useState } from "react";
 import { HomeOutline, MailOutline, PeopleOutline, PersonOutline, PlanetOutline, SearchOutline, SettingsOutline } from "react-ionicons";
 import { Button } from "@/components/elemets/Button";
 import { usePathname, useRouter } from "next/navigation";
 import { ReduxProvider } from "./providers";
 import { useDispatch, useSelector } from "react-redux";
-import { setTheme } from "./redux/features/themeSlice";
 import NavBar from "@/components/fragments/NavBar";
+import { ThemeProvider } from 'next-themes';
 
 // Menyembunyikan peringatan spesifik
 const originalWarn = console.error;
@@ -49,42 +48,43 @@ const enablePathName = ["/", "/post", "/comment", "/test"]
 // };
 
 export default function RootLayout({ children }) {
-  useEffect(() => {
-    if(localStorage.getItem("theme") !== "dark" && localStorage.getItem("theme") !== "light") {
-      localStorage.setItem("theme", "system")
-    }
-  }, [])
-   
   const pathName = usePathname();
   const router = useRouter();
+  const [mounted, setMounted] = useState(false);
+
+      // Pastikan komponen hanya melakukan rendering di sisi client
+      useEffect(() => setMounted(true), []);
+
+      if (!mounted) return null; // hindari flickering saat rendering awal
   return (
-    <html lang="en" class="dark">
+    <html lang="en" >
       <head>
           <meta charSet="UTF-8" />
           <meta name="viewport" content="width=device-width, initial-scale=1.0" />
           <title>VibeNet</title>
-
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${inter.className} antialiased bg-white dark:bg-black `}
       >
-        <ReduxProvider >
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+          
+          <ReduxProvider >
 
-        {enablePathName.includes(pathName) ? 
-        <div className="flex min-h-screen bg-white dark:bg-black container mx-auto sm:px-20 xl:px-28 relative">
-        
-          <div className="sticky inset-0  bg-white dark:bg-black h-screen w-[35rem] flex-col items-center hidden lg:flex">
-              <NavBar />
-          </div>
-          {children}
-          <div className="sticky inset-0 right-0 bg-white dark:bg-black h-screen w-[45rem] pl-5 hidden lg:block">
-            <input className="mt-10 bg-slate-300 dark:bg-gray-800 text-sm border-0 rounded-lg 2-full py-3 px-3 text-black dark:text-white w-full focus:ring-0 focus:outline-none" type="text" placeholder="Search" />
-          </div>
-        </div> 
-    : <>{children}</>
-      }
-        </ReduxProvider>
-        
+          {enablePathName.includes(pathName) ? 
+          <div className="flex min-h-screen bg-white dark:bg-black container mx-auto sm:px-20 xl:px-28 relative">
+          
+            <div className="sticky inset-0  bg-white dark:bg-black h-screen w-[35rem] flex-col items-center hidden lg:flex">
+                <NavBar />
+            </div>
+            {children}
+            <div className="sticky inset-0 right-0 bg-white dark:bg-black h-screen w-[45rem] pl-5 hidden lg:block">
+              <input className="mt-10 bg-slate-300 dark:bg-gray-800 text-sm border-0 rounded-lg 2-full py-3 px-3 text-black dark:text-white w-full focus:ring-0 focus:outline-none" type="text" placeholder="Search" />
+            </div>
+          </div> 
+      : <>{children}</>
+        }
+          </ReduxProvider>
+      </ThemeProvider>
         
       </body>
     </html>

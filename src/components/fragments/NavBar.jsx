@@ -1,65 +1,23 @@
 'use client'
-const { setTheme } = require("@/app/redux/features/themeSlice");
+import { current } from "@reduxjs/toolkit";
+import { useTheme } from "next-themes";
 const { usePathname, useRouter } = require("next/navigation");
 const { useState, useEffect } = require("react");
 const { PlanetOutline, HomeOutline, SearchOutline, MailOutline, PeopleOutline, PersonOutline, SettingsOutline } = require("react-ionicons");
 const { useSelector, useDispatch } = require("react-redux");
 
 const NavBar = () => {
-    const {theme} = useSelector((state) => state.theme);
-    const dispatch = useDispatch();
+  const dispatch = useDispatch();
     
-    useEffect(() => {
-      // Set theme dari localStorage saat komponen pertama kali dimuat
-      const savedTheme = localStorage.getItem("theme");
-      if(savedTheme) {
-        dispatch(setTheme(savedTheme));
-      }
-      
-    }, [dispatch]);
-  
-      const [themeColor, setThemeColor] = useState('text-black');
-      const [themeIcon, setThemeIcon] = useState('text-black');
-      useEffect(() => {
-          if (theme === 'system') {
-          const systemTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-          document.documentElement.classList.remove('dark', 'light');
-          document.documentElement.classList.add(systemTheme);
-          localStorage.setItem("theme", systemTheme)
-          }
-          else if(theme === "dark") {
-          document.documentElement.classList.add("dark");
-          setThemeColor("text-white");
-          setThemeIcon("moon-outline");
-          } else {
-          document.documentElement.classList.remove("dark");
-          setThemeColor("text-black");
-          setThemeIcon("sunny-outline");
-          }
-          //localStorage.setItem("theme", theme)
-          console.log(`theme: ${theme}`)
-      }, [theme])
-  
-      const handleThemeSwitch = (type) => {
-          if(type == 1) {
-          dispatch(setTheme("dark"))
-          localStorage.setItem("theme", "dark")
-          } else if(type == 2) {
-            dispatch(setTheme("light"))
-            localStorage.setItem("theme", "light")
-          } else{
-            dispatch(setTheme("system"))
-          }
-          console.log(theme)
-      };
-
-      useEffect(() => {
-        if(localStorage.getItem("theme") !== "dark" && localStorage.getItem("theme") !== "light") {
-          localStorage.setItem("theme", "system")
-        }
-      }, [])
+ 
         const pathName = usePathname();
         const router = useRouter();
+      const { theme, setTheme, systemTheme } = useTheme();
+      
+
+      // Tentukan tema yang aktif saat ini
+      const currentTheme = theme === 'system' ? systemTheme : theme;
+      
       
         //image
         const handleFileChange = (event) => {
@@ -73,30 +31,30 @@ const NavBar = () => {
 
     return (
         <nav className="my-10 text-black w-full px-8 dark:text-white ">
-                <h1 onClick={() => handleThemeSwitch(theme == "light" ? 1 : 2)} className="w-8 h-8 "><PlanetOutline style={{color: theme == "dark" ? "white" : "black", width: "100%", height: "100%"}} /></h1>
+                <h1 onClick={() => currentTheme == "light" ? setTheme('dark') : setTheme('light')} className="w-8 h-8 "><PlanetOutline style={{color: currentTheme == "dark" ? "white" : "black", width: "100%", height: "100%"}} /></h1>
                 <ul className="text-black dark:text-white">
                     <li className="flex mb-3 mt-5 cursor-pointer" onClick={() => router.push("/")}>
-                        <HomeOutline style={{color: theme == "dark" ? "white" : "black"}} />
+                        <HomeOutline style={{color: currentTheme == "dark" ? "white" : "black"}} />
                         <h1 className="text-xl ml-2 ">Home</h1>
                     </li>
                     <li className="flex mb-3 mt-3 cursor-pointer" onClick={() => router.push("/")}>
-                        <SearchOutline style={{color: theme == "dark" ? "white" : "black"}} />
+                        <SearchOutline style={{color: currentTheme == "dark" ? "white" : "black"}} />
                         <h1 className="text-xl ml-2">Explore</h1>
                     </li>
                     <li className="flex mb-3 mt-3 cursor-pointer" onClick={() => router.push("/")}>
-                        <MailOutline style={{color: theme == "dark" ? "white" : "black"}} />
+                        <MailOutline style={{color: currentTheme == "dark" ? "white" : "black"}} />
                         <h1 className="text-xl ml-2">Message</h1>
                     </li>
                     <li className="flex mb-3 mt-3 cursor-pointer" onClick={() => router.push("/")}>
-                        <PeopleOutline style={{color: theme == "dark" ? "white" : "black"}} />
+                        <PeopleOutline style={{color: currentTheme == "dark" ? "white" : "black"}} />
                         <h1 className="text-xl ml-2">Communities</h1>
                     </li>
                     <li className="flex mb-3 mt-3 cursor-pointer" onClick={() => router.push("/")}>
-                        <PersonOutline style={{color: theme == "dark" ? "white" : "black"}} />
+                        <PersonOutline style={{color: currentTheme == "dark" ? "white" : "black"}} />
                         <h1 className="text-xl ml-2">Profile</h1>
                     </li>
                     <li className="flex mb-3 mt-3 cursor-pointer" onClick={() => router.push("/")}>
-                        <SettingsOutline style={{color: theme == "dark" ? "white" : "black"}} />
+                        <SettingsOutline style={{color: currentTheme == "dark" ? "white" : "black"}} />
                         <h1 className="text-xl ml-2">Settings</h1>
                     </li>
                 </ul>

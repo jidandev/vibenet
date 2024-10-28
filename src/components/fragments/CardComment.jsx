@@ -2,6 +2,7 @@
 
 import { likeComment } from "@/app/redux/features/commentSlice"
 import Image from "next/image"
+import { useEffect, useState } from "react"
 import { Heart } from "react-ionicons"
 import { useDispatch } from "react-redux"
 

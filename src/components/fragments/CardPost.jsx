@@ -25,7 +25,7 @@ const Header = ({image = "/images.jpeg", username="unknown"}) => {
         <div className="flex justify-between flex-row mt-2 ml-2 mb-2">
             <div className="flex">
                 <Image src={image} alt="" width={500} height={500} className="h-10 w-10 rounded-full" />
-                <h1 className="text-black text-md dark:text-white font-semibold mt-2 ml-2">{username}</h1>
+                <h1 className="text-black dark:text-white font-semibold mt-2 ml-2">{username}</h1>
             </div>
             <h1 className="w-6 h-6 mt-2"><EllipsisVertical style={{fill: theme == "light" ? "black" : "white", width: "100%", height: "100%"}}/></h1>
         </div>

@@ -64,7 +64,7 @@ export default function RootLayout({ children }) {
           <title>VibeNet</title>
       </head>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} ${inter.className} antialiased bg-white dark:bg-black `}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-white dark:bg-black `}
       >
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           

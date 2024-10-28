@@ -71,12 +71,15 @@ export default function RootLayout({ children }) {
           <ReduxProvider >
 
           {enablePathName.includes(pathName) ? 
-          <div className="flex min-h-screen bg-white dark:bg-black container mx-auto sm:px-20 xl:px-28 relative">
+          <div className="flex flex-col lg:flex-row min-h-screen bg-white dark:bg-black container mx-auto sm:px-20 xl:px-28 relative">
           
             <div className="sticky inset-0  bg-white dark:bg-black h-screen w-[35rem] flex-col items-center hidden lg:flex">
                 <NavBar />
             </div>
             {children}
+            <div className="sticky left-0 bottom-0 bg-white dark:bg-red-600 h-20 w-full pl-5 block lg:hidden">
+              
+            </div>
             <div className="sticky inset-0 right-0 bg-white dark:bg-black h-screen w-[45rem] pl-5 hidden lg:block">
               <input className="mt-10 bg-slate-300 dark:bg-gray-800 text-sm border-0 rounded-lg 2-full py-3 px-3 text-black dark:text-white w-full focus:ring-0 focus:outline-none" type="text" placeholder="Search" />
             </div>

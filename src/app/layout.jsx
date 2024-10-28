@@ -22,7 +22,7 @@ console.error = (...args) => {
 const inter = Inter({
   subsets: ['latin'],
   weight: ['400', '500', '700'],
-  display: swap,
+  display: 'swap',
 })
 
 const playfair = Playfair_Display({

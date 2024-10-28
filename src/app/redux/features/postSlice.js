@@ -10,6 +10,20 @@ const initialState = {
       caption: "Hello world",
       likes: [],
     },
+    {
+      id: Date.now().toString() + 1,
+      username: "jidann._00",
+      image: "/images.jpeg",
+      caption: "Hello world",
+      likes: [],
+    },
+    {
+      id: Date.now().toString() + 2,
+      username: "jidann._00",
+      image: "/images.jpeg",
+      caption: "Hello world",
+      likes: [],
+    },
   ],
 };
 

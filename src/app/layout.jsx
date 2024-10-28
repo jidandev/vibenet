@@ -41,7 +41,7 @@ const geistMono = localFont({
   weight: "100 900",
 });
 
-const enablePathName = ["/", "/post", "/comment"]
+const enablePathName = ["/", "/post", "/comment", "/test"]
 
 // export const metadata = {
 //   title: "VibeNet",
@@ -66,18 +66,18 @@ export default function RootLayout({ children }) {
 
       </head>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} ${inter.className} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} ${inter.className} antialiased bg-white dark:bg-black `}
       >
         <ReduxProvider >
 
         {enablePathName.includes(pathName) ? 
-        <div className="flex min-h-screen bg-white dark:bg-black container mx-auto xl:px-20">
+        <div className="flex min-h-screen bg-white dark:bg-black container mx-auto sm:px-20 xl:px-28 relative">
         
-          <div className="bg-white dark:bg-black h-screen w-[35rem] flex-col items-center hidden lg:flex">
+          <div className="sticky inset-0  bg-white dark:bg-black h-screen w-[35rem] flex-col items-center hidden lg:flex">
               <NavBar />
           </div>
           {children}
-          <div className="bg-white dark:bg-black h-screen w-[40rem] pl-5 pr-10 hidden lg:block">
+          <div className="sticky inset-0 right-0 bg-white dark:bg-black h-screen w-[45rem] pl-5 hidden lg:block">
             <input className="mt-10 bg-slate-300 dark:bg-gray-800 text-sm border-0 rounded-lg 2-full py-3 px-3 text-black dark:text-white w-full focus:ring-0 focus:outline-none" type="text" placeholder="Search" />
           </div>
         </div> 

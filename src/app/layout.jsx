@@ -57,7 +57,7 @@ export default function RootLayout({ children }) {
 
       if (!mounted) return null; // hindari flickering saat rendering awal
   return (
-    <html lang="en" >
+    <html lang="en" class="dark" >
       <head>
           <meta charSet="UTF-8" />
           <meta name="viewport" content="width=device-width, initial-scale=1.0" />

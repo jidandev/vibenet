@@ -22,6 +22,7 @@ console.error = (...args) => {
 const inter = Inter({
   subsets: ['latin'],
   weight: ['400', '500', '700'],
+  display: swap,
 })
 
 const playfair = Playfair_Display({
@@ -64,7 +65,7 @@ export default function RootLayout({ children }) {
           <title>VibeNet</title>
       </head>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-white dark:bg-black `}
+        className={`${geistSans.variable} ${geistMono.variable} ${inter.className} antialiased bg-white dark:bg-black `}
       >
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           
@@ -77,7 +78,7 @@ export default function RootLayout({ children }) {
                 <NavBar />
             </div>
             {children}
-            <div className="sticky left-0 bottom-0 bg-white dark:bg-red-600 h-20 w-full pl-5 block lg:hidden">
+            <div className="sticky left-0 bottom-0 bg-white dark:bg-red-600 h-14 w-full pl-5 block lg:hidden">
               
             </div>
             <div className="sticky inset-0 right-0 bg-white dark:bg-black h-screen w-[45rem] pl-5 hidden lg:block">

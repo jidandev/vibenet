@@ -123,7 +123,7 @@ const Home = () => {
       
 
     return (
-        <div ref={mainDivRef} className="bg-white  pb-24 lg:pb-0 dark:bg-black h-screen relative overflow-y-auto w-full px-0 lg:px-0 flex flex-col">
+        <div ref={mainDivRef} className="bg-white inter pb-24 lg:pb-0 dark:bg-black h-screen relative overflow-y-auto w-full px-0 lg:px-0 flex flex-col">
             <div className=" bg-black "> {/* Menambahkan container di sini */}
             
             {post.map((item) => (

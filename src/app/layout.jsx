@@ -2,8 +2,8 @@
 import localFont from "next/font/local";
 import "./globals.css";
 import { Inter, Playfair_Display } from 'next/font/google'
-import { useEffect, useState } from "react";
-import { HomeOutline, MailOutline, PeopleOutline, PersonOutline, PlanetOutline, SearchOutline, SettingsOutline } from "react-ionicons";
+import { useEffect, useRef, useState } from "react";
+import { Camera, Home, HomeOutline, Mail, MailOutline, PeopleOutline, Person, PersonOutline, PlanetOutline, Search, SearchOutline, SettingsOutline } from "react-ionicons";
 import { Button } from "@/components/elemets/Button";
 import { usePathname, useRouter } from "next/navigation";
 import { ReduxProvider } from "./providers";
@@ -55,10 +55,22 @@ export default function RootLayout({ children }) {
   const router = useRouter();
   const [mounted, setMounted] = useState(false);
 
+ 
+
       // Pastikan komponen hanya melakukan rendering di sisi client
       useEffect(() => setMounted(true), []);
 
       if (!mounted) return null; // hindari flickering saat rendering awal
+
+      //image
+      const handleFileChange = (event) => {
+        const file = event.target.files[0]; // Mengambil file pertama yang dipilih
+        if (file) {
+          const imageUrl = URL.createObjectURL(file);
+          localStorage.setItem("image", imageUrl);
+        }
+        router.push("/post")
+      };
   return (
     <html lang="en" class="dark" >
       <head>
@@ -74,14 +86,20 @@ export default function RootLayout({ children }) {
           <ReduxProvider >
 
           {enablePathName.includes(pathName) ? 
-          <div className="flex flex-col lg:flex-row min-h-screen bg-white dark:bg-black container mx-auto sm:px-20 xl:px-28 relative">
+          <div  className="flex flex-col lg:flex-row min-h-screen bg-white dark:bg-black container mx-auto sm:px-20 xl:px-28 relative">
           
             <div className="sticky inset-0  bg-white dark:bg-black h-screen w-[35rem] flex-col items-center hidden lg:flex">
                 <NavBar />
             </div>
             {children}
-            <div className="sticky left-0 bottom-0 bg-white dark:bg-red-600 h-14 w-full pl-5 block lg:hidden">
-              
+  
+            <div className="fixed z-10 left-0 bottom-0 bg-black/30 backdrop-blur-md h-14 w-full sm:w-[30rem] md:w-[38rem] sm:left-auto flex justify-between items-center lg:hidden">
+              <h1 onClick={() => router.push("/")} className="w-8 h-8 ml-4"><Home style={{fill: "white", width: "100%", height: "100%"}} /></h1>
+              <h1 className="w-8 h-8 ml-4 "><Mail style={{fill: "white", width: "100%", height: "100%"}} /></h1>
+              <h1 className="w-8 h-8 ml-4 relative"><Camera style={{fill: "white", width: "100%", height: "100%"}} /><input onChange={handleFileChange} type="file" name="file" id="" className="absolute top-0 left-0 w-full h-full opacity-0 " /></h1>
+              <h1 className="w-8 h-8 ml-4"><Search style={{fill: "white", width: "100%", height: "100%"}} /></h1>
+              <h1 className="w-8 h-8 ml-4"><Person style={{fill: "white", width: "100%", height: "100%"}} /></h1>
+                  
             </div>
             <div className="sticky inset-0 right-0 bg-white dark:bg-black h-screen w-[45rem] pl-5 hidden lg:block">
               <input className="mt-10 bg-slate-300 dark:bg-gray-800 text-sm border-0 rounded-lg 2-full py-3 px-3 text-black dark:text-white w-full focus:ring-0 focus:outline-none" type="text" placeholder="Search" />
